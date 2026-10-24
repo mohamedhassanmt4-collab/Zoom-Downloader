@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="src/zoom_joiner/assets/icons/icon-256.png" width="96" alt="Zoom Downloader icon">
+
 
 # Zoom Downloader
 
