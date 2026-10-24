@@ -58,9 +58,9 @@ Download one file for your system from the Releases page.
 System	File	Install
 🪟 Windows	zoom-downloader-windows.zip	Extract, then run setup.ps1
 🐧 Linux (x86_64)	zoom-downloader-linux-x86_64.tar.gz	Extract, then run ./setup.sh
-Installation
+🚀 Installation
 
-An internet connection is required once during installation, to fetch the Python packages and the Chromium engine.
+ℹ️ Installation needs an internet connection once, to fetch the Python packages and the Chromium engine.
 
 Requirements
 Requirement	Notes
@@ -71,23 +71,29 @@ Operating system	Windows or Linux (x86_64)
 bash
 tar -xzf zoom-downloader-linux-x86_64.tar.gz
 cd zoom-downloader
-./setup.sh
-Command	Result
-./setup.sh	Installs for the current user (~/.local)
-sudo ./setup.sh --system	Installs for all users (/opt and /usr/local/bin)
-./setup.sh --uninstall	Removes the application
 
-The installer checks Python, creates a virtual environment, installs the application, downloads Chromium, creates the launchers (zoom-joiner and zoom-joiner-gui), and adds a Zoom Downloader entry to the applications menu.
+./setup.sh                 # install for the current user (~/.local)
+# or
+sudo ./setup.sh --system   # install for all users (/opt + /usr/local/bin)
 
+setup.sh does everything for you: checks Python, creates a virtual environment, installs the app, downloads Chromium, creates the launchers (zoom-joiner and zoom-joiner-gui), and adds a Zoom Downloader icon to your applications menu.
+
+To remove everything:
+
+bash
+./setup.sh --uninstall
 🪟 Windows
-Extract zoom-downloader-windows.zip.
-Open PowerShell inside the extracted zoom-downloader folder.
-Run the installer:
+Download zoom-downloader-windows.zip and extract it (right-click → Extract All).
+Open PowerShell inside the extracted zoom-downloader folder and run:
 powershell
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
-Command	Result
-.\setup.ps1	Installs for the current user and adds a Start menu shortcut (no administrator rights needed)
-.\setup.ps1 -Uninstall	Removes the application; your queue and settings are kept
+
+It installs Zoom Downloader for the current user and adds a Start menu shortcut. No admin rights needed.
+
+To remove it (your queue and settings are kept):
+
+powershell
+.\setup.ps1 -Uninstall
 Usage
 
 Launch Zoom Downloader from the applications menu, or run zoom-joiner-gui in a terminal.
