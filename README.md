@@ -20,35 +20,40 @@
 </div>
 
 ---
-
+Table of Contents
+		
+Overview	Usage	Command line
+Features	Options	Data locations
+Download	Naming and organizing	Building from source
+Installation	Troubleshooting	Contributing
 Overview
 
-Zoom cloud recordings are easy to lose once a course or a meeting series ends. Zoom Downloader is a desktop application that takes your recording share links and passcodes and downloads the files directly from Zoom's CDN using parallel connections. The quality is the same as the original, and it is much faster than downloading one recording at a time from the browser.
+Zoom cloud recordings are easy to lose once a course or a meeting series ends. Zoom Downloader is a desktop application that takes your recording share links and passcodes and downloads the files directly from Zoom's CDN using parallel connections. Quality is identical to the original, and it is much faster than downloading one recording at a time from the browser.
 
 Paste your links, press one button, and get an organized folder of recordings.
 
 <!-- Add a screenshot here: ![Zoom Downloader](docs/screenshot.png) -->
-
 What's new in 1.5.2
-
-More accurate progress bar: it reaches 100% only after the file is fully saved, and stays at 99% while the parts are merged.
-A contact card inside the app for feedback and suggestions.
-Rename by date now works on recordings downloaded earlier.
+Change	Details
+Accurate progress bar	Reaches 100% only after the file is fully saved; stays at 99% while parts are merged
+Contact card	A small card inside the app for feedback and suggestions
+Rename by date	Now also works on recordings downloaded earlier
 Features
-Native desktop app. A dark Qt interface, not a browser tab.
-Direct CDN download. Captures the signed video URL from Zoom's player and downloads it with up to 16 parallel connections per file.
-Queue. Add links at any time; they join the running queue and are processed in turn.
-Automatic resume. The queue is saved to disk, so closing the app, losing the connection, or rebooting does not lose progress.
-Pause and resume. Pausing stops new downloads and keeps the parts already written.
-Passcode per recording, with a default passcode as a fallback.
-Flexible naming. Custom names, or sequence numbering for several rows at once (for example, Lecture 1 to 12).
-No overwrites. A duplicate name is saved as Name (2).
-Choose what to download: video (mp4), audio only (m4a), and transcript (vtt).
-Rename by date. Organize an existing folder as Name YYYY-MM-DD.mp4, using the date stored in the video metadata.
-Command-line interface for scripting and automation.
+Feature	Details
+Native desktop app	Dark Qt interface, not a browser tab
+Direct CDN download	Captures the signed video URL from Zoom's player, then downloads with up to 16 parallel connections per file
+Queue	Add links at any time; they join the running queue and are processed in turn
+Automatic resume	The queue is saved to disk, so closing the app, losing the connection, or rebooting does not lose progress
+Pause and resume	Pausing stops new downloads and keeps the parts already written
+Passcode per recording	A passcode on each line, with a default passcode as a fallback
+Flexible naming	Custom names, or sequence numbering for several rows at once
+No overwrites	A duplicate name is saved as Name (2)
+Output formats	Video (mp4), audio only (m4a), transcript (vtt)
+Rename by date	Organizes a folder as Name YYYY-MM-DD.mp4 using the date in the video metadata
+Command line	Scriptable downloads for automation
 Download
 
-Download one file for your system from the Releases page:
+Download one file for your system from the Releases page.
 
 System	File	Install
 🪟 Windows	zoom-downloader-windows.zip	Extract, then run setup.ps1
@@ -57,44 +62,42 @@ Installation
 
 An internet connection is required once during installation, to fetch the Python packages and the Chromium engine.
 
-Requirements: Python 3.10 or later. Chromium is installed automatically through Playwright; an existing Google Chrome also works.
-
+Requirements
+Requirement	Notes
+Python 3.10 or later	Checked by the installer
+Chromium	Installed automatically through Playwright; an existing Google Chrome also works
+Operating system	Windows or Linux (x86_64)
 🐧 Linux
 bash
 tar -xzf zoom-downloader-linux-x86_64.tar.gz
 cd zoom-downloader
+./setup.sh
+Command	Result
+./setup.sh	Installs for the current user (~/.local)
+sudo ./setup.sh --system	Installs for all users (/opt and /usr/local/bin)
+./setup.sh --uninstall	Removes the application
 
-./setup.sh                 # install for the current user (~/.local)
-# or
-sudo ./setup.sh --system   # install for all users (/opt and /usr/local/bin)
+The installer checks Python, creates a virtual environment, installs the application, downloads Chromium, creates the launchers (zoom-joiner and zoom-joiner-gui), and adds a Zoom Downloader entry to the applications menu.
 
-The script checks Python, creates a virtual environment, installs the application, downloads Chromium, creates the launchers (zoom-joiner and zoom-joiner-gui), and adds a Zoom Downloader entry to the applications menu.
-
-To uninstall:
-
-bash
-./setup.sh --uninstall
 🪟 Windows
 Extract zoom-downloader-windows.zip.
-Open PowerShell inside the extracted zoom-downloader folder and run:
+Open PowerShell inside the extracted zoom-downloader folder.
+Run the installer:
 powershell
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
-
-This installs the application for the current user and adds a Start menu shortcut. Administrator rights are not required.
-
-To uninstall (your queue and settings are kept):
-
-powershell
-.\setup.ps1 -Uninstall
+Command	Result
+.\setup.ps1	Installs for the current user and adds a Start menu shortcut (no administrator rights needed)
+.\setup.ps1 -Uninstall	Removes the application; your queue and settings are kept
 Usage
 
 Launch Zoom Downloader from the applications menu, or run zoom-joiner-gui in a terminal.
 
-Copy the share link from the email or meeting chat where Zoom shared the recording.
-Copy the passcode. If the link already contains ?pwd=..., the passcode can be left empty.
-Paste the links into the box on the left and press Add to the list.
-Choose the folder where the files will be saved.
-Press Download all recordings.
+Step	Action
+1	Copy the share link from the email or meeting chat where Zoom shared the recording
+2	Copy the passcode. If the link already contains ?pwd=..., the passcode can be left empty
+3	Paste the links into the box on the left and press Add to the list
+4	Choose the folder where the files will be saved
+5	Press Download all recordings
 
 If the app is closed or the connection drops, open it again and press the same button; the download continues from where it stopped.
 
@@ -105,35 +108,50 @@ One recording per line. The name is optional.
 share-link  passcode  name
 https://us06web.zoom.us/rec/share/AbCdEf...  123456  Weekly Team Sync
 https://us06web.zoom.us/rec/share/XyZ123...  654321  Client Review
-
-Zoom sends the recording link by email or in the meeting chat. It starts with https://.../rec/share/ and usually ends with ?pwd=123456, where the value after pwd= is the passcode.
-
+Field	Required	Description
+Share link	Yes	Starts with https://.../rec/share/
+Passcode	If not in the link	The value after ?pwd=, or the passcode Zoom sent with the link
+Name	No	Used as the saved file name
 Interface overview
 Section	Purpose
-Top bar	Download all recordings, Pause, progress bar, and application status
+Top bar	Download all recordings, Pause, progress bar, application status
 1. Paste the recording links	Paste links, then Add to the list or Paste from clipboard
-2. Options	Default passcode, save folder, connections per file, and video, audio, or transcript
+2. Options	Default passcode, save folder, connections per file, video, audio, transcript
 Organize an existing folder	Rename files by date, with an optional base name
 3. Recording list	Each recording with its live status; right-click to rename
 Activity log	Live log of the application's actions
 How to use	Built-in help window
+Options
+Option	Default	Description
+Default passcode	Empty	Used for any link without its own passcode
+Save to	~/Downloads/zoom-recordings	Destination folder
+Connections per file	16	Number of parallel connections for each file
+Video file (mp4)	On	Download the video recording
+Audio only (m4a)	Off	Download the audio track only
+Transcript (vtt)	Off	Download the transcript
 Naming and Organizing
 Renaming items in the list
-Right-click a row, or double-click it, to rename it.
-Select several rows and choose Name as a sequence to number them in one step.
-The recording name becomes the saved file name. Two files never overwrite each other; a duplicate is saved as Name (2).
+Action	Result
+Right-click a row, or double-click it	Rename that recording
+Select several rows, then choose Name as a sequence	Numbers them in one step (for example, Lecture 1 to 12)
+Two recordings with the same name	The second is saved as Name (2); files never overwrite each other
 Organizing an existing folder
 
-Use Rename files by date on any folder of recordings:
+Use Rename files by date on any folder of recordings. It runs on the folder selected in Save to.
 
-Enter a base name to unify every file as Name YYYY-MM-DD.mp4. Files that share a date are numbered.
-Leave the base name empty to only add missing dates.
+Base name	Result
+Entered (for example, DAV-R)	Every file becomes DAV-R YYYY-MM-DD.mp4; files that share a date are numbered
+Left empty	Only missing dates are added to existing names
+
 The date is read from the video metadata, so files downloaded earlier are supported.
-The operation runs on the folder selected in Save to.
-Restricted Recordings
 
-If the recording owner has restricted access, Zoom asks you to sign in first. Open the link once in your browser, sign in, then retry in the application.
-
+Troubleshooting
+Problem	Solution
+Zoom asks to sign in	The owner restricted the recording. Open the link once in your browser, sign in, then retry in the app
+Download fails with a passcode error	Check the passcode, or set the Default passcode in Options
+Download stops after a connection drop	Open the app and press Download all recordings again; it resumes from where it stopped
+Installer cannot find Python	Install Python 3.10 or later, then run the installer again
+Environment problems	Run zoom-joiner doctor to check Playwright and Chromium
 Command Line
 bash
 # One recording, including audio
@@ -146,14 +164,13 @@ zoom-joiner download -f recordings.txt --parallel 3
 
 # Maximum speed: 16 connections per file
 zoom-joiner download -f recordings.txt --connections 16
+Command	Purpose
+zoom-joiner download ...	Download recordings from the terminal
+zoom-joiner app	Launch the desktop app (same as zoom-joiner-gui)
+zoom-joiner doctor	Check the environment (Playwright and Chromium)
+zoom-joiner --help	List all commands
 
-Other commands:
-
-bash
-zoom-joiner app       # launch the desktop app (same as zoom-joiner-gui)
-zoom-joiner doctor    # check the environment (Playwright and Chromium)
-
-The CLI also retains an older feature for joining live meetings in bulk (zoom-joiner run and zoom-joiner gui). It is no longer part of the desktop app. Run zoom-joiner --help for details.
+The CLI also retains an older feature for joining live meetings in bulk (zoom-joiner run and zoom-joiner gui). It is no longer part of the desktop app.
 
 Data Locations
 Item	Location (Linux)
@@ -175,37 +192,33 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
 playwright install chromium
-
-Development commands:
-
-bash
-make test      # run the test suite (pytest)
-make lint      # lint (ruff)
-make format    # format (ruff format)
-make bundle    # build a distributable archive in dist/
+Command	Purpose
+make install	Development environment and Chromium
+make test	Run the test suite (pytest)
+make lint	Lint (ruff)
+make format	Format (ruff format)
+make bundle	Build a distributable archive in dist/
 Project structure
-zoom-joiner/
-├── src/zoom_joiner/
-│   ├── app.py            # desktop application (Qt / PySide6)
-│   ├── cli.py            # command-line interface
-│   ├── store.py          # persists the queue for automatic resume
-│   ├── config.py         # reads YAML, JSON, CSV, and TXT
-│   ├── models.py         # data models and statuses
-│   ├── orchestrator.py   # parallelism, retries, and cancellation
-│   ├── report.py         # CSV, JSON, and HTML reports
-│   └── backends/         # Chromium / Playwright backend
-├── setup.sh              # Linux installer
-├── setup.ps1             # Windows installer
-├── tests/                # unit tests
-├── deploy/               # desktop entry and icons
-└── Makefile
+Path	Purpose
+src/zoom_joiner/app.py	Desktop application (Qt / PySide6)
+src/zoom_joiner/cli.py	Command-line interface
+src/zoom_joiner/store.py	Persists the queue for automatic resume
+src/zoom_joiner/config.py	Reads YAML, JSON, CSV, and TXT
+src/zoom_joiner/models.py	Data models and statuses
+src/zoom_joiner/orchestrator.py	Parallelism, retries, and cancellation
+src/zoom_joiner/report.py	CSV, JSON, and HTML reports
+src/zoom_joiner/backends/	Chromium / Playwright backend
+setup.sh, setup.ps1	Linux and Windows installers
+tests/	Unit tests
+deploy/	Desktop entry and icons
 Reporting Issues
 
-This project is in beta. If you find a bug, please open an Issue and include:
+This project is in beta. Please open an Issue and include:
 
-Your operating system and version
-Steps to reproduce the problem
-A screenshot or the Activity log output, if available
+Information	Why it helps
+Operating system and version	Reproduce platform-specific problems
+Steps to reproduce	Find the cause faster
+Screenshot or Activity log output	Shows the exact error
 
 You can also reach out through the contact card inside the application.
 
@@ -213,11 +226,12 @@ Contributing
 
 Bug fixes, ideas, and feature requests are welcome.
 
-Fork the repository.
-Create a branch: git checkout -b feature/my-feature
-Commit your changes: git commit -m "Add my feature"
-Push the branch: git push origin feature/my-feature
-Open a pull request.
+Step	Command
+1. Fork the repository	
+2. Create a branch	git checkout -b feature/my-feature
+3. Commit your changes	git commit -m "Add my feature"
+4. Push the branch	git push origin feature/my-feature
+5. Open a pull request	
 ⚠️ Disclaimer
 
 Zoom Downloader does not bypass Zoom's protections. A valid link and passcode are required, and recordings that require sign-in still do. Download only recordings that you own or have permission to access, and respect Zoom's terms of use and your institution's privacy rules. This project is not affiliated with or endorsed by Zoom Video Communications, Inc.
